@@ -19,14 +19,13 @@ import java.awt.*;
 public class Viewer extends Canvas implements Runnable{
 
     private Fire fuego;
-    
+    private volatile boolean running;
 
     public Viewer(Fire fuego) {
         this.fuego = fuego;
         setSize(fuego.getWidth(), fuego.getHeight());
         setVisible(true);
-        
-        
+        setRunning(true);
             }
 
 
@@ -42,12 +41,39 @@ public class Viewer extends Canvas implements Runnable{
         while (true) {
             if (this.getGraphics() != null){
                 paint(this.getGraphics());
+
                 try {
                     Thread.sleep(10);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
+
+            //System.out.println("Estat actual: " + getThreadState());
+
         }
+    }
+    private void setThreadState(boolean running){
+        this.running = !running;
+    }
+    private boolean getThreadState(){
+        return running;
+    }
+    public void pauseThread(){
+        if(getThreadState()){
+
+            setThreadState(false);
+        }else{
+            setThreadState(true);
+        }
+        System.out.println(running);
+
+    }
+    public boolean isRunning(){
+        return running;
+    }
+
+    public void setRunning(boolean running){
+        this.running = running;
     }
 }

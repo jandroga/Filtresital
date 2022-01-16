@@ -3,10 +3,9 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
-public class ControlPanel extends JPanel {
+public class ControlPanel extends JPanel implements Runnable{
 
     FireControlPanel fireControlPanel = new FireControlPanel();
-    GridBagConstraints constraints = new GridBagConstraints();
 
     public ControlPanel(){
 
@@ -14,10 +13,13 @@ public class ControlPanel extends JPanel {
         super(new GridBagLayout());
         this.setSize(400,400);
         this.setVisible(true);
-        this.setBackground(Color.GREEN);
         this.add(fireControlPanel);
 
 
     }
 
+    @Override
+    public void run() {
+
+    }
 }

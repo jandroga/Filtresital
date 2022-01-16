@@ -19,6 +19,8 @@ public class Fire extends BufferedImage implements Runnable{
     private final int height;
     private final int[][] tempMap; //array 2d que servirà de mapa de temperatura
     private int[][] newTempMap;
+    private volatile boolean running;
+    private volatile boolean stopped = false;
 
         
     public Fire(int width, int height, FirePalette firePalette){
@@ -65,7 +67,7 @@ public class Fire extends BufferedImage implements Runnable{
     }
     
     private void flamePaint(){
-    
+
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
                 this.setRGB(i, j, firePalette.getColor(tempMap[i][j]));
@@ -86,17 +88,50 @@ public class Fire extends BufferedImage implements Runnable{
     
     public void run(){
     
-        while(true) {
-            createSparks();
-            flameEvolve();
-            coldSparks();
-            flamePaint();
+        while(!stopped) {
             try {
                 Thread.sleep(30);
             } catch (Exception e) {
                 System.out.println(e);
             }
+
+            if(running);{
+                createSparks();
+                flameEvolve();
+                coldSparks();
+                flamePaint();
+//                System.out.println(running);
+            }
         }
     }
+//    public void toggleThreadStatus() {
+//        running = !running;
+//    }
+
+    private void setThreadState(boolean running){
+        this.running = !running;
+    }
+    private boolean getThreadState(){
+        return running;
+    }
+    public void pauseThread(){
+        if(getThreadState()){
+
+            setThreadState(false);
+        }else{
+            setThreadState(true);
+        }
+        System.out.println(running);
+
+    }
+    public boolean isRunning(){
+        return running;
+    }
+
+    public void setRunning(boolean running){
+        this.running = running;
+    }
 }
+
+
 
