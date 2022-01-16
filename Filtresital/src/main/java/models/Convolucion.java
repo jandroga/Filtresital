@@ -1,2 +1,4 @@
-package models;public class Convolucion {
+package models;
+
+public class Convolucion {
 }

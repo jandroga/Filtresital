@@ -5,7 +5,8 @@
 package controllers;
 
 import models.Fire;
-import models.FlamePalette;
+import models.FirePalette;
+import views.ControlPanel;
 import views.Viewer;
 
 import javax.swing.*;
@@ -20,21 +21,33 @@ public class MyTask extends JFrame{
      * @param args the command line arguments
      */
     private Viewer v;
-    private FlamePalette flamePalette;
+    private ControlPanel cp;
+    private FirePalette firePalette;
     
     public MyTask() {
     
        super("Foquet");
-       flamePalette = new FlamePalette();
-       Fire f = new Fire(500, 500, flamePalette);
+       firePalette = new FirePalette();
+       Fire f = new Fire(500, 500, firePalette);
        v = new Viewer(f);
+       cp = new ControlPanel();
        this.setLayout(new GridBagLayout());
-       this.setSize(1000, 1000);
-       //this.getContentPane().setBackground(new Color(255,0,0,255));
+       GridBagConstraints constraints = new GridBagConstraints();
+
+       //Viewier ubi
+       this.setSize(1366, 768);
        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        this.setVisible(true);
-       this.add(v);
-       
+       changeGridPos(constraints, 0, 0);
+       this.add(v,constraints);
+
+       //Control Panel ubi
+       changeGridPos(constraints, 1, 0);
+       changeGridDim(constraints, 2, 3);
+       cp.setBackground(Color.green);
+       this.add(cp, constraints);
+
+       //Thread on marxa
        Thread t1 = new Thread(v); //ho pos aquí perquè a nes viewer no funciona
        t1.start();
 
@@ -42,9 +55,20 @@ public class MyTask extends JFrame{
        
        
     }
+
+    //Obra mestra
+    private void changeGridDim(GridBagConstraints constraints, int x, int y) {
+        constraints.gridwidth = x;
+        constraints.gridheight = y;
+    }
+
+    private void changeGridPos(GridBagConstraints constraints, int x, int y) {
+        constraints.gridx = x;
+        constraints.gridy = y;
+    }
+
     public static void main(String[] args) {
-        
-        // TODO code application logic here
+
         new MyTask();
        
         

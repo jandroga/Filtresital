@@ -11,12 +11,12 @@ import java.util.ArrayList;
  *
  * @author NitroPC
  */
-public class FlamePalette {
+public class FirePalette {
     int[] colors;
     private ArrayList<TargetColor> targetArray = new ArrayList<>();
   
     
-    public FlamePalette(){
+    public FirePalette(){
         createColors();
     }
     
@@ -80,11 +80,11 @@ public class FlamePalette {
             targetArray.add(targetColor);
         }
     }
-        FlamePalette flamePalette;
+        FirePalette firePalette;
         
-        public void setFlamePalette(FlamePalette addColorFinal) {
+        public void setFirePalette(FirePalette addColorFinal) {
             createColors();
-            flamePalette = new FlamePalette();
+            firePalette = new FirePalette();
             //flamePalette.addColorFinal(new ColorFinal(255, Color.yellow));
 //            flamePalette.addColorFinal(new ColorFinal(color1));
 //            flamePalette.addColorFinal(new ColorFinal(color0));

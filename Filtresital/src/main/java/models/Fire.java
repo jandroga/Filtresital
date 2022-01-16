@@ -14,18 +14,18 @@ import java.awt.image.BufferedImage;
 
 public class Fire extends BufferedImage implements Runnable{
     
-    private final FlamePalette flamePalette;
+    private final FirePalette firePalette;
     private final int width;
     private final int height;
     private final int[][] tempMap; //array 2d que servirà de mapa de temperatura
     private int[][] newTempMap;
 
         
-    public Fire(int width, int height, FlamePalette flamePalette){
+    public Fire(int width, int height, FirePalette firePalette){
         super(width,height,BufferedImage.TYPE_INT_ARGB);
         
         this.newTempMap = new int[width][height];
-        this.flamePalette = flamePalette;
+        this.firePalette = firePalette;
         this.height = height;
         this.width = width;
         this.tempMap = new int[width][height];
@@ -68,7 +68,7 @@ public class Fire extends BufferedImage implements Runnable{
     
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
-                this.setRGB(i, j, flamePalette.getColor(tempMap[i][j]));
+                this.setRGB(i, j, firePalette.getColor(tempMap[i][j]));
                 //flamePalette.getColor(tempMap[i][j])
         
             }
@@ -78,7 +78,7 @@ public class Fire extends BufferedImage implements Runnable{
         for (int i = 0; i < width; i++) {
             for (int j = height - 5; j > 0; j--) {
                 if (((int) (Math.random() * 2)) < 1) {
-                    tempMap[i][j] = (int)Math.ceil(tempMap[i][j]*0.85);
+                    tempMap[i][j] = (int)Math.ceil(tempMap[i][j]*0.89);
                 }
             }
         }
@@ -86,43 +86,17 @@ public class Fire extends BufferedImage implements Runnable{
     
     public void run(){
     
-        while(true){
+        while(true) {
             createSparks();
             flameEvolve();
             coldSparks();
             flamePaint();
-            try{
-                Thread.sleep(30);}
-            catch(Exception e){
+            try {
+                Thread.sleep(30);
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
-//    public int getSize(int width, int height){
-//        
-//        return ;}
-//    private int x;
-//    private int y;
-//    private byte[]array_bytes;
-//    private FlamePalette flamePalette = new FlamePalette();
-//    private int[][] temperature;//Array 2d que servirà de mapa de temperatura
-//    BufferedImage bimage = new BufferedImage(800,600,BufferedImage.TYPE_INT_ARGB);
-//
-//    public void paint(Graphics g) {
-//        for int (x = 0; x < flamePalette.length;
-//        x++){
-//            for int (y = 0; y < flamePalette[x].length;
-//            y++){
-//                bimage.setRGB(x, y, flamePalette[x][y].getRGB());
-//            }
-//        }
-//    }
-//    public void setPixel(int y, int x, int Temp){
-//        Color color = flamePalette.colors.get(Temp);
-//    }
-//    public createSparks(){
-//        
-//        int temperatura = 0;
-//        for int()
     }
 }
 

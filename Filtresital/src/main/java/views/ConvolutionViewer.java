@@ -1,2 +1,4 @@
-package views;public class ConvolutionViewer {
+package views;
+
+public class ConvolutionViewer {
 }

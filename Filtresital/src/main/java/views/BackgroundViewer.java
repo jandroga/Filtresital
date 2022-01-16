@@ -1,2 +1,4 @@
-package views;public class BackgroundViewer {
+package views;
+
+public class BackgroundViewer {
 }

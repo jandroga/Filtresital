@@ -1,2 +1,4 @@
-package views;public class ConvolutionControlPanel {
+package views;
+
+public class ConvolutionControlPanel {
 }
