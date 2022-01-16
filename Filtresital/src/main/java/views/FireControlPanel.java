@@ -5,7 +5,6 @@ import models.Fire;
 import models.FirePalette;
 
 import javax.swing.*;
-import javax.swing.text.View;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,7 +43,6 @@ public class FireControlPanel extends JPanel {
         firePalette = new FirePalette();
         f = new Fire(500, 500, firePalette);
         v = new Viewer(f);
-
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
