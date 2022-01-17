@@ -1,4 +1,11 @@
 package views;
 
-public class GenericControlPanel {
+import javax.swing.*;
+
+public class GenericControlPanel extends JPanel {
+
+    public GenericControlPanel(){
+        //this.setSize();
+
+    }
 }

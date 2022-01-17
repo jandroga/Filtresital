@@ -4,24 +4,18 @@
  */
 package models;
 
-/**
- *
- * @author NitroPC
- */
-
 import java.awt.image.BufferedImage;
 
 
 public class Fire extends BufferedImage implements Runnable{
     
-    private final FirePalette firePalette;
+    private volatile FirePalette firePalette;
     private final int width;
     private final int height;
     private final int[][] tempMap; //array 2d que servirà de mapa de temperatura
     private int[][] newTempMap;
-    private volatile boolean running;
-    private volatile boolean stopped = false;
-
+    private boolean running = true;
+    private double fireLenght = 0.88;
         
     public Fire(int width, int height, FirePalette firePalette){
         super(width,height,BufferedImage.TYPE_INT_ARGB);
@@ -31,13 +25,12 @@ public class Fire extends BufferedImage implements Runnable{
         this.height = height;
         this.width = width;
         this.tempMap = new int[width][height];
-        
-        Thread thread = new Thread(this); //com ja és dedins es constructor, THIS
-        thread.start();
+
     }
-    
-    
-    
+
+
+
+
     public void createSparks(){
     
         for (int i = 1; i < width; i++){ //recorrem la base del foc
@@ -46,12 +39,9 @@ public class Fire extends BufferedImage implements Runnable{
             }
         }
     }
-    
 
-    
-    
+
     public void flameEvolve(){
-    
         
         newTempMap = tempMap;
         for (int i = 1;  i < width -1; i++){
@@ -76,56 +66,41 @@ public class Fire extends BufferedImage implements Runnable{
             }
         }   
     }
-     private void coldSparks() {
+
+    public double getFireLenght() {
+        return fireLenght;
+    }
+
+    private void coldSparks() {
+        this.fireLenght = fireLenght;
         for (int i = 0; i < width; i++) {
             for (int j = height - 5; j > 0; j--) {
                 if (((int) (Math.random() * 2)) < 1) {
-                    tempMap[i][j] = (int)Math.ceil(tempMap[i][j]*0.89);
+                    tempMap[i][j] = (int)Math.ceil(tempMap[i][j]*fireLenght);
                 }
             }
         }
     }
+
+    public void setFireLength(double fireLenght){
+        this.fireLenght = fireLenght;
+    }
     
     public void run(){
     
-        while(!stopped) {
+        while(running) {
             try {
-                Thread.sleep(30);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-
-            if(running);{
+                System.out.println("Foc updating");
+                System.out.println(running);
                 createSparks();
                 flameEvolve();
                 coldSparks();
                 flamePaint();
-//                System.out.println(running);
+                Thread.sleep(30);
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
-    }
-//    public void toggleThreadStatus() {
-//        running = !running;
-//    }
-
-    private void setThreadState(boolean running){
-        this.running = !running;
-    }
-    private boolean getThreadState(){
-        return running;
-    }
-    public void pauseThread(){
-        if(getThreadState()){
-
-            setThreadState(false);
-        }else{
-            setThreadState(true);
-        }
-        System.out.println(running);
-
-    }
-    public boolean isRunning(){
-        return running;
     }
 
     public void setRunning(boolean running){

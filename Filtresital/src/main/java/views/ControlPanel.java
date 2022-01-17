@@ -10,7 +10,7 @@ public class ControlPanel extends JPanel implements Runnable{
     public ControlPanel(){
 
         super(new GridBagLayout());
-        this.setSize(100,100);
+        this.setSize(500,500);
         this.setVisible(true);
         this.add(fireControlPanel);
 

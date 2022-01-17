@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
@@ -16,54 +17,78 @@ import java.awt.*;
  *
  * @author NitroPC
  */
-public class MyTask extends JFrame{
+public class MyTask extends JFrame {
 
-    /**
-     * @param args the command line arguments
-     */
+    private Fire f;
+    private volatile boolean myTaskMontada = false;
     private Viewer v;
     private ControlPanel cp;
     private FirePalette firePalette;
+    private FireController fireController;
     private Dimension resolution;
-    private Color backGroundColor;
+    public volatile Color bgColor;
     GridBagConstraints constraints = new GridBagConstraints();
 
 
     public MyTask() {
         super("Foquet");
-        firePalette = new FirePalette();
-        Fire f = new Fire(500, 500, firePalette);
-        v = new Viewer(f);
-        cp = new ControlPanel();
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        this.setSize(1366, 768);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
 
+        fireController = new FireController(f);
 
-        //Viewier ubi
+        if (!myTaskMontada) {
 
-        changeGridPos(constraints, 0, 0);
-        changeGridDim(constraints, 1, 3);
-        this.add(v,constraints);
+            montarMyTask();
+            montarViewer();
+            montarControlPanel();
 
-        //Control Panel ubi
-        changeGridPos(constraints, 1, 0);
-        changeGridDim(constraints, 2, 3);
-        cp.setBackground(Color.green);
-        this.add(cp, constraints);
+            this.setVisible(true);
+            this.getContentPane().setBackground(Color.PINK);
+            myTaskMontada = true;
 
-        //Thread on marxa
-        Thread t1 = new Thread(v); //ho pos aquí perquè a nes viewer no funciona
-        t1.start();
+        } else {
 
-        this.getContentPane().setBackground(Color.cyan);
+            System.out.println("asdasd");
+            this.getContentPane().setBackground(Color.getColor(String.valueOf(bgColor)));
+            this.setVisible(false);
+            this.setVisible(true);
+        }
     }
 
-    private void setBackgroundColor(Color color){
-        this.backGroundColor = color;
-        this.setBackground(color);
+    private void montarMyTask() {
+        this.setLayout(new GridBagLayout());
+        this.setSize(1366, 768);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public Fire getF() {
+        return f;
+    }
+
+    private void montarViewer() {
+        firePalette = new FirePalette();
+        f = new Fire(500, 500, firePalette);
+        v = new Viewer(f);
+        changeGridPos(constraints, 0, 0);
+        this.add(v, constraints);
+    }
+
+    private void montarControlPanel() {
+        cp = new ControlPanel();
+        changeGridPos(constraints, 1, 0);
+        cp.setBackground(Color.green);
+        cp.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.add(cp, constraints);
+    }
+
+    private void setBgColor(Color color) {
+        this.bgColor = color;
+//        this.getContentPane().setBackground(Color.getColor(String.valueOf(bgColor)));
+        this.setVisible(false);
+        this.setVisible(true);
+    }
+
+    private Color getBgColor() {
+        return bgColor;
     }
 
 
@@ -79,26 +104,9 @@ public class MyTask extends JFrame{
         constraints.gridy = y;
     }
 
-//    public void farcirMyTaskViewer(){
-//
-//        changeGridPos(constraints, 0, 0);
-//        changeGridDim(constraints, 3, 3);
-//        this.add(v,constraints);
-//        Thread t1 = new Thread(v);
-//        t1.start();
-//
-//    }
-//    public void farcirMyTaskCP(){
-//        changeGridPos(constraints, 1, 0);
-//        changeGridDim(constraints, 2, 3);
-//        cp.setBackground(Color.green);
-//        this.add(cp, constraints);
-//    }
 
     public static void main(String[] args) {
 
         new MyTask();
     }
-
-    
 }
