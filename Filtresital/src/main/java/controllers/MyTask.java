@@ -22,18 +22,17 @@ public class MyTask extends JFrame {
     private Fire f;
     private volatile boolean myTaskMontada = false;
     private Viewer v;
+    private FireController fc;
     private ControlPanel cp;
     private FirePalette firePalette;
     private FireController fireController;
     private Dimension resolution;
-    public volatile Color bgColor;
+    public Color bgColor;
     GridBagConstraints constraints = new GridBagConstraints();
 
 
     public MyTask() {
         super("Foquet");
-
-        fireController = new FireController(f);
 
         if (!myTaskMontada) {
 
@@ -56,7 +55,7 @@ public class MyTask extends JFrame {
 
     private void montarMyTask() {
         this.setLayout(new GridBagLayout());
-        this.setSize(1366, 768);
+        this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -65,7 +64,14 @@ public class MyTask extends JFrame {
     }
 
     private void montarViewer() {
-        firePalette = new FirePalette();
+
+        firePalette = new FirePalette(new Color(255,255,0,255),
+                new Color(255,180,0,255),
+                new Color(255,145,0,255),
+                new Color(255,100,0,255),
+                new Color(255,0,0,255),
+                new Color(0,0,0,255));
+
         f = new Fire(500, 500, firePalette);
         v = new Viewer(f);
         changeGridPos(constraints, 0, 0);
@@ -73,10 +79,10 @@ public class MyTask extends JFrame {
     }
 
     private void montarControlPanel() {
-        cp = new ControlPanel();
-        changeGridPos(constraints, 1, 0);
+        cp = new ControlPanel(this);
         cp.setBackground(Color.green);
         cp.setBorder(BorderFactory.createLineBorder(Color.black));
+        changeGridPos(constraints, 1, 0);
         this.add(cp, constraints);
     }
 
@@ -108,5 +114,6 @@ public class MyTask extends JFrame {
     public static void main(String[] args) {
 
         new MyTask();
+
     }
 }

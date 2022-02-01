@@ -25,17 +25,12 @@ public class Viewer extends Canvas implements Runnable{
         this.fuego = fuego;
         setSize(fuego.getWidth(), fuego.getHeight());
         setVisible(true);
-        setRunning(true);
 
         Thread threadV = new Thread(this);
         threadV.start();
 
         Thread thread = new Thread(fuego);
         thread.start();
-    }
-
-    private void borrador(Fire f){
-        fuego = null;
     }
 
 
@@ -57,32 +52,9 @@ public class Viewer extends Canvas implements Runnable{
                     System.out.println(e);
                 }
             }
-
-            //System.out.println("Estat actual: " + getThreadState());
-
         }
     }
-    private void setThreadState(boolean running){
-        this.running = !running;
-    }
-    private boolean getThreadState(){
-        return running;
-    }
-    public void pauseThread(){
-        if(getThreadState()){
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            setThreadState(false);
-        }else{
-            notify();
-            setThreadState(true);
-        }
-        System.out.println(running);
 
-    }
     public boolean isRunning(){
         return running;
     }

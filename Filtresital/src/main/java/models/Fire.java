@@ -8,14 +8,14 @@ import java.awt.image.BufferedImage;
 
 
 public class Fire extends BufferedImage implements Runnable{
-    
+
     private volatile FirePalette firePalette;
     private final int width;
     private final int height;
     private final int[][] tempMap; //array 2d que servirà de mapa de temperatura
     private int[][] newTempMap;
     private boolean running = true;
-    private double fireLenght = 0.88;
+    private double fireLenght = 0.68;
         
     public Fire(int width, int height, FirePalette firePalette){
         super(width,height,BufferedImage.TYPE_INT_ARGB);
@@ -29,7 +29,13 @@ public class Fire extends BufferedImage implements Runnable{
     }
 
 
+    public FirePalette getFirePalette() {
+        return firePalette;
+    }
 
+    public void setFirePalette(FirePalette firePalette) {
+        this.firePalette = firePalette;
+    }
 
     public void createSparks(){
     
@@ -72,7 +78,6 @@ public class Fire extends BufferedImage implements Runnable{
     }
 
     private void coldSparks() {
-        this.fireLenght = fireLenght;
         for (int i = 0; i < width; i++) {
             for (int j = height - 5; j > 0; j--) {
                 if (((int) (Math.random() * 2)) < 1) {
@@ -85,22 +90,30 @@ public class Fire extends BufferedImage implements Runnable{
     public void setFireLength(double fireLenght){
         this.fireLenght = fireLenght;
     }
-    
+
+    @Override
     public void run(){
-    
-        while(running) {
+
+        while(true) {
             try {
-                System.out.println("Foc updating");
-                System.out.println(running);
-                createSparks();
-                flameEvolve();
-                coldSparks();
-                flamePaint();
-                Thread.sleep(30);
+                //Si llev aquest sout no se reanuda es foc (per lo que sigui deixa de detectar es while)
+                Thread.sleep(10);
+                while(running) {
+                    createSparks();
+                    flameEvolve();
+                    coldSparks();
+                    flamePaint();
+                    Thread.sleep(20);
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
+    }
+
+    public boolean getRunning() {
+
+        return this.running;
     }
 
     public void setRunning(boolean running){

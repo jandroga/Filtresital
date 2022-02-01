@@ -14,41 +14,32 @@ import java.util.ArrayList;
 public class FirePalette {
     int[] colors;
     private ArrayList<TargetColor> targetArray = new ArrayList<>();
-    boolean colorsCreated = false;
 
-    public FirePalette(){
-//        System.out.println(colorsCreated);
-        createColors();
-        colorsCreated = true;
-//        System.out.println(colorsCreated);
+    public FirePalette(Color c1, Color c2, Color c3, Color c4, Color c5, Color fons){
 
+        createColors(c1, c2, c3, c4, c5, fons);
     }
 
 
 
-    public void createColors(){//Método per crear es colors que després aniran
+    public void createColors(Color c1, Color c2, Color c3, Color c4, Color c5, Color fons) {//Método per crear es colors que després aniran
 
-        if(!colorsCreated){
         colors = new int[256];
 
-        targetArray.add(new TargetColor(255, new Color(255,255,0,255)));//255 és sa "posició"(temp) i lo altre és es color k surt
-        targetArray.add(new TargetColor(200, new Color(255,180,0,255)));
-        targetArray.add(new TargetColor(155, new Color(255,145,0,255)));
-        targetArray.add(new TargetColor(100, new Color(255,100,0,255)));
-        targetArray.add(new TargetColor(50, new Color(255,0,0,255)));
-        targetArray.add(new TargetColor(0, new Color(0,0,0,255)));
 
-        for(int i = 0; i < targetArray.size()-1; i++){//index 0 groc
+        targetArray.add(new TargetColor(255, c1));//255 és sa "posició"(temp) i lo altre és es color k surt
+        targetArray.add(new TargetColor(200, c2));
+        targetArray.add(new TargetColor(155, c3));
+        targetArray.add(new TargetColor(100, c4));
+        targetArray.add(new TargetColor(50, c5));
+        targetArray.add(new TargetColor(0, fons));
+
+        for (int i = 0; i < targetArray.size() - 1; i++) {//index 0 groc
             TargetColor current = targetArray.get(i);
-            TargetColor next = targetArray.get(i+1);
-            for(int j = current.temp; j >= next.temp; j--){
-                colors[Math.abs(0-j)] = interpolateColor(current, next, current.temp - next.temp, current.temp-j);
+            TargetColor next = targetArray.get(i + 1);
+            for (int j = current.temp; j >= next.temp; j--) {
+                colors[Math.abs(0 - j)] = interpolateColor(current, next, current.temp - next.temp, current.temp - j);
             }
-
-            }
-        }else{
-
-            System.out.println("actualitzant PALETA");
         }
     }
 
@@ -65,14 +56,7 @@ public class FirePalette {
         return result.getRGB();
         }
 
-
         public int getColor(int temp) { //Pillar color
-            if (colors == null) {
-                createColors();//si la paleta és buida, createColors()
-//            } else {
-//                setCustomColor(colors);
-//                return colors[getCustomColor()];
-            }
             return colors[temp];
         }
 
@@ -95,16 +79,12 @@ public class FirePalette {
             this.color = color;
         }
 
-        private void addColorFinal(TargetColor targetColor){
-            targetArray.add(targetColor);
+        public int getTemp() {
+            return temp;
         }
+
     }
-        FirePalette firePalette;
-        
-        public void setFlamePalette(FirePalette addColorFinal) {
-            createColors();
-            firePalette = new FirePalette();
-        }
+
     }
         
         
