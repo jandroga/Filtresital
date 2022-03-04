@@ -2,20 +2,56 @@ package models;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Convolution {
 
-    int width;
-    int height;
+    private int width;
+    private int height;
+    private double[][] arrayImage;
+    private int currentIteration;
 
-    int [][] kernel = {
+    //Per anar sumant sa dim des kernel a sa imatge i així anar-la recorrent
+    private int x, y, j, k, l, p;
+
+    private int r, g, b;
+    private double[][][] image3d;
+    private double[][] image2d;
+    private int center;
+    private int inici;
+    private int fin;
+
+    private BufferedImage rawImage;
+
+    int[][] kernel = {
             {-1, -1, -1},
             {-1, 8, -1},
             {-1, -1, -1}};
 
-    public Convolution(){
+    public Convolution(BufferedImage rawImage) {
+        center = kernel.length / 2;
+        inici = -center;
+        fin = center;
+        this.rawImage = rawImage;
+        this.image3d = imageToArray(rawImage);
     }
 
+    public void convolve() {
+        this.image3d = imageToArray(rawImage);
+        this.image2d = set2dArray();
+        for (int i = 0; i < kernel.length; i++) {
+            for (int j = 0; j < kernel.length; j++) {
+
+            }
+        }
+    }
+
+    private double[][] set2dArray() {
+        for (int i = 0; i < rawImage.getWidth(); i++)
+            for (int j = 0; j < rawImage.getHeight(); j++)
+                image2d[i][j] = rawImage.getRGB(i, j);
+        return image2d;
+    }
 
     public double[][][] imageToArray(BufferedImage bufferedImage) {
         width = bufferedImage.getWidth();
@@ -33,13 +69,36 @@ public class Convolution {
         return image;
     }
 
-//    private double[][] convolve(double[][] input, int width, int height,
-//                                double[][] kernel, int kernelWidth,
-//                                int kernelHeight, int iterations){
-//
-//
-//
-//    }
+
+    private double simpleMatrixMult() {
+
+        double singleMult = 0;
+
+        for (y = center; y < kernel.length - center; y++) {
+            for (x = 0; x < kernel.length - center; x++) {
+                r = 0;
+                g = 0;
+                b = 0;
+
+                int loc1 = x + y * rawImage.getWidth();
+
+                for (j = inici, k = 0; j <= fin; j++, k++) {
+                    for (l = inici, p = 0; l <= fin; l++, p++) {
+                        int loc2 = (x + l) + ((y + j) * rawImage.getWidth());
+//                        r +=
+                    }
+                }
+            }
+        }
+        return singleMult;
+    }
+
+
+    private File edgeDetect() {
+        double[][][] image = imageToArray(rawImage);
+
+        return null;
+    }
 
     private double[][][] applyConv(int width, int height, double[][][] image, double[][] filter){
 

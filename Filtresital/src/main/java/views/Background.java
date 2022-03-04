@@ -21,7 +21,7 @@ public class Background extends BufferedImage {
 
     public void loadImage(){
         try {
-            tempImage = ImageIO.read(new File("res/samurai.jpg"));
+            tempImage = ImageIO.read(new File("Filtresital/src/res/samurai.jpg"));
         } catch (IOException e) {
             e.printStackTrace();
         }
