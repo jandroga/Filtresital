@@ -16,7 +16,7 @@ public class Fire extends BufferedImage implements Runnable{
     private int[][] newTempMap;
     private boolean running = true;
     private double fireLenght = 0.68;
-        
+
     public Fire(int width, int height, FirePalette firePalette){
         super(width,height,BufferedImage.TYPE_INT_ARGB);
         

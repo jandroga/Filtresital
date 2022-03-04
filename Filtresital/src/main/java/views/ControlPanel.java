@@ -12,11 +12,11 @@ public class ControlPanel extends JPanel{
 
         super(new GridBagLayout());
         FireControlPanel fireControlPanel = new FireControlPanel(mt);
-//        ConvolutionControlPanel convolutionControlPanel = new ConvolutionControlPanel();
+        ConvolutionControlPanel convolutionControlPanel = new ConvolutionControlPanel(mt);
         this.setSize(500,500);
         this.setVisible(true);
         this.add(fireControlPanel);
-//        this.add(convolutionControlPanel);
+        this.add(convolutionControlPanel);
 
     }
 

@@ -1,17 +1,24 @@
 package views;
 
+import controllers.ConvolutionController;
 import controllers.MyTask;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class ConvolutionControlPanel extends JPanel {
 
+    private ConvolutionController cc;
+    private MyTask mt;
+    private Background bg;
     GridBagConstraints constraints = new GridBagConstraints();
 
     public ConvolutionControlPanel(MyTask mt){
+        this.mt = mt;
+
+        cc = new ConvolutionController(mt);
+        bg = new Background(500, 500, BufferedImage.TYPE_INT_ARGB);
         this.setBackground(Color.GREEN);
         this.setVisible(true);
 
@@ -22,16 +29,12 @@ public class ConvolutionControlPanel extends JPanel {
         JButton button1 = new JButton("1");
         changeGridPos(constraints, 0,1);
         this.add(button1, constraints);
+        button1.addActionListener(e -> cc.addConvolutionFire());
 
         JButton button2 = new JButton("2");
         changeGridPos(constraints, 0,2);
         this.add(button2, constraints);
-
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
+        button2.addActionListener(e -> mt.afegirBg());
     }
 
 

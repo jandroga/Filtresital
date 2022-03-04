@@ -1,8 +1,60 @@
 package models;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Convolution {
 
-    public static double singlePixelConvolution(double[][] input,
+    int width;
+    int height;
+
+    int [][] kernel = {
+            {-1, -1, -1},
+            {-1, 8, -1},
+            {-1, -1, -1}};
+
+    public Convolution(){
+    }
+
+
+    public double[][][] imageToArray(BufferedImage bufferedImage) {
+        width = bufferedImage.getWidth();
+        height = bufferedImage.getHeight();
+
+        double[][][] image = new double[3][height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color color = new Color(bufferedImage.getRGB(j, i));
+                image[0][i][j] = color.getRed();
+                image[1][i][j] = color.getGreen();
+                image[2][i][j] = color.getBlue();
+            }
+        }
+        return image;
+    }
+
+//    private double[][] convolve(double[][] input, int width, int height,
+//                                double[][] kernel, int kernelWidth,
+//                                int kernelHeight, int iterations){
+//
+//
+//
+//    }
+
+    private double[][][] applyConv(int width, int height, double[][][] image, double[][] filter){
+
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+
+            }
+
+        }
+        return image;
+    }
+
+
+    public double singlePixelConvolution(double[][] input,
                                                 int x, int y,
                                                 double[][] k,
                                                 int kernelWidth,
@@ -16,7 +68,7 @@ public class Convolution {
         return output;
     }
 
-    public static double[][] convolution2D(double[][] input,
+    public double[][] convolution2D(double[][] input,
                                            int width, int height,
                                            double[][] kernel,
                                            int kernelWidth,
@@ -37,7 +89,7 @@ public class Convolution {
         }
         return output;
     }
-    public static double[][] convolution2DPadded(double[][] input,
+    public double[][] convolution2DPadded(double[][] input,
                                                  int width, int height,
                                                  double[][] kernel,
                                                  int kernelWidth,
@@ -77,5 +129,15 @@ public class Convolution {
             newInput = output.clone();
         }
         return output;
+    }
+    private int fixOutOfRangeRGBValues(double value) {
+        if (value < 0.0) {
+            value = -value;
+        }
+        if (value > 255) {
+            return 255;
+        } else {
+            return (int) value;
+        }
     }
 }

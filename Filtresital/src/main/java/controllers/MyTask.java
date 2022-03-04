@@ -5,9 +5,12 @@
  */
 package controllers;
 
+import models.Convolution;
 import models.Fire;
 import models.FirePalette;
+import views.Background;
 import views.ControlPanel;
+import views.ConvolutionViewer;
 import views.Viewer;
 
 import javax.swing.*;
@@ -20,14 +23,16 @@ import java.awt.*;
 public class MyTask extends JFrame {
 
     private Fire f;
+    private Fire f2;
+    private Convolution convolution;
+    private Background bg;
+    private ConvolutionViewer cv;
     private volatile boolean myTaskMontada = false;
     private Viewer v;
-    private FireController fc;
     private ControlPanel cp;
     private FirePalette firePalette;
-    private FireController fireController;
-    private Dimension resolution;
     public Color bgColor;
+    private boolean bgLoaded = false;
     GridBagConstraints constraints = new GridBagConstraints();
 
 
@@ -51,7 +56,10 @@ public class MyTask extends JFrame {
             this.setVisible(false);
             this.setVisible(true);
         }
+
+
     }
+
 
     private void montarMyTask() {
         this.setLayout(new GridBagLayout());
@@ -84,6 +92,33 @@ public class MyTask extends JFrame {
         cp.setBorder(BorderFactory.createLineBorder(Color.black));
         changeGridPos(constraints, 1, 0);
         this.add(cp, constraints);
+    }
+
+    public void addConvolutionImage(){
+
+        int i = 2;
+        if(i < 3){
+            f2 = new Fire(500, 500, firePalette);
+            cv = new ConvolutionViewer(f2);
+        }
+        changeGridPos(constraints, i, 0);
+        this.add(cv, constraints);
+        System.out.println("a");
+        i++;
+    }
+
+    public void afegirBg(){
+        if(!bgLoaded){
+            Background bg = new Background(500, 500, 2);
+            JLabel label = new JLabel(new ImageIcon(bg.getBg()));
+            changeGridPos(constraints, 3, 0);
+            label.setVisible(true);
+            this.add(label, constraints);
+            this.setVisible(false);
+            this.setVisible(true);
+            bgLoaded = true;
+
+        }
     }
 
     private void setBgColor(Color color) {
