@@ -1,5 +1,7 @@
 package views;
 
+import models.Convolution;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,6 +11,7 @@ public class Background extends BufferedImage {
 
     private int width;
     private int height;
+    private Convolution c;
     public BufferedImage image;
     public BufferedImage tempImage;
 
@@ -17,6 +20,7 @@ public class Background extends BufferedImage {
         this.width = width;
         this.height = height;
         loadImage();
+        c = new Convolution(image);
     }
 
     public void loadImage(){

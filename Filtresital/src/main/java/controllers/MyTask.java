@@ -15,6 +15,7 @@ import views.Viewer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -41,12 +42,21 @@ public class MyTask extends JFrame {
 
         if (!myTaskMontada) {
 
+            bg = new Background(500, 500, 2);
+            convolution = new Convolution(bg);
+
             montarMyTask();
             montarViewer();
             montarControlPanel();
 
             this.setVisible(true);
             this.getContentPane().setBackground(Color.PINK);
+            JLabel label = new JLabel(new ImageIcon(bg.getBg()));
+            changeGridPos(constraints, 3, 0);
+            label.setVisible(true);
+            this.add(label, constraints);
+            this.setVisible(false);
+            this.setVisible(true);
             myTaskMontada = true;
 
         } else {
@@ -56,8 +66,6 @@ public class MyTask extends JFrame {
             this.setVisible(false);
             this.setVisible(true);
         }
-
-
     }
 
 
@@ -80,7 +88,7 @@ public class MyTask extends JFrame {
                 new Color(255,0,0,255),
                 new Color(0,0,0,255));
 
-        f = new Fire(500, 500, firePalette);
+        f = new Fire(500, 500, firePalette, convolution);
         v = new Viewer(f);
         changeGridPos(constraints, 0, 0);
         this.add(v, constraints);
@@ -98,7 +106,7 @@ public class MyTask extends JFrame {
 
         int i = 2;
         if(i < 3){
-            f2 = new Fire(500, 500, firePalette);
+            f2 = new Fire(500, 500, firePalette, convolution);
             cv = new ConvolutionViewer(f2);
         }
         changeGridPos(constraints, i, 0);
@@ -109,7 +117,6 @@ public class MyTask extends JFrame {
 
     public void afegirBg(){
         if(!bgLoaded){
-            Background bg = new Background(500, 500, 2);
             JLabel label = new JLabel(new ImageIcon(bg.getBg()));
             changeGridPos(constraints, 3, 0);
             label.setVisible(true);
@@ -117,7 +124,6 @@ public class MyTask extends JFrame {
             this.setVisible(false);
             this.setVisible(true);
             bgLoaded = true;
-
         }
     }
 
