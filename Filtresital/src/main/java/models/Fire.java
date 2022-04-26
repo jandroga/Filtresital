@@ -113,8 +113,8 @@ public class Fire extends BufferedImage implements Runnable{
                 //Si llev aquest sout no se reanuda es foc (per lo que sigui deixa de detectar es while)
                 Thread.sleep(10);
                 while(running) {
-                    createConvolutedSparks();
-//                    createSparks();
+//                    createConvolutedSparks();
+                    createSparks();
                     flameEvolve();
                     coldSparks();
                     flamePaint();

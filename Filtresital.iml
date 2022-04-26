@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
+    <output url="file://$MODULE_DIR$/Filtresital/target/classes" />
+    <output-test url="file://$MODULE_DIR$/Filtresital/target/test-classes" />
+    <content url="file://$MODULE_DIR$/Filtresital">
       <sourceFolder url="file://$MODULE_DIR$/Filtresital/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/Filtresital/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

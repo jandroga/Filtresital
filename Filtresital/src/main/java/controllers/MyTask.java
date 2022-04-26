@@ -15,7 +15,6 @@ import views.Viewer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  *
@@ -126,19 +125,9 @@ public class MyTask extends JFrame {
             bgLoaded = true;
         }
     }
-
-    private void setBgColor(Color color) {
-        this.bgColor = color;
-//        this.getContentPane().setBackground(Color.getColor(String.valueOf(bgColor)));
-        this.setVisible(false);
-        this.setVisible(true);
-    }
-
     private Color getBgColor() {
         return bgColor;
     }
-
-
 
     //Obra mestra
     private void changeGridDim(GridBagConstraints constraints, int x, int y) {
@@ -155,6 +144,5 @@ public class MyTask extends JFrame {
     public static void main(String[] args) {
 
         new MyTask();
-
     }
 }
