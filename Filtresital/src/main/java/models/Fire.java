@@ -10,16 +10,19 @@ import java.awt.image.BufferedImage;
 public class Fire extends BufferedImage implements Runnable{
 
     private volatile FirePalette firePalette;
+    private Convolution convolution;
     private final int width;
     private final int height;
-    private final int[][] tempMap; //array 2d que servirà de mapa de temperatura
+    private int[][] tempMap; //array 2d que servirà de mapa de temperatura
     private int[][] newTempMap;
     private boolean running = true;
+    private boolean convoluted;
     private double fireLenght = 0.68;
-        
-    public Fire(int width, int height, FirePalette firePalette){
+
+    public Fire(int width, int height, FirePalette firePalette, Convolution convolution){
         super(width,height,BufferedImage.TYPE_INT_ARGB);
-        
+
+        this.convolution = convolution;
         this.newTempMap = new int[width][height];
         this.firePalette = firePalette;
         this.height = height;
@@ -37,6 +40,7 @@ public class Fire extends BufferedImage implements Runnable{
         this.firePalette = firePalette;
     }
 
+
     public void createSparks(){
     
         for (int i = 1; i < width; i++){ //recorrem la base del foc
@@ -46,13 +50,23 @@ public class Fire extends BufferedImage implements Runnable{
         }
     }
 
+    private void createConvolutedSparks(){
+        tempMap = convolution.getImage2d();
+        for (int i = 0; i < convolution.getImage2d().length; i++) {
+            for (int j = 0; j < convolution.getImage2d().length; j++) {
+                System.out.println(convolution.getImage2d()[i][j]);
+            }
+        }
+    }
+
 
     public void flameEvolve(){
-        
+
+
         newTempMap = tempMap;
         for (int i = 1;  i < width -1; i++){
             for (int j = 1; j < height -1; j++){
-                int down = newTempMap[i][j+1];          //assignam cada pròxim 
+                int down = newTempMap[i][j+1];          //assignam cada pròxim
                 int downLeft = newTempMap[i-1][j+1];    //valor a una posició
                 int downRight = newTempMap[i+1][j+1];   //per canviar-ho tot més fàcil
                 int current = newTempMap[i][j];
@@ -99,6 +113,7 @@ public class Fire extends BufferedImage implements Runnable{
                 //Si llev aquest sout no se reanuda es foc (per lo que sigui deixa de detectar es while)
                 Thread.sleep(10);
                 while(running) {
+//                    createConvolutedSparks();
                     createSparks();
                     flameEvolve();
                     coldSparks();

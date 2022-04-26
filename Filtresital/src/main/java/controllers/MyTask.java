@@ -5,9 +5,12 @@
  */
 package controllers;
 
+import models.Convolution;
 import models.Fire;
 import models.FirePalette;
+import views.Background;
 import views.ControlPanel;
+import views.ConvolutionViewer;
 import views.Viewer;
 
 import javax.swing.*;
@@ -20,14 +23,16 @@ import java.awt.*;
 public class MyTask extends JFrame {
 
     private Fire f;
+    private Fire f2;
+    private Convolution convolution;
+    private Background bg;
+    private ConvolutionViewer cv;
     private volatile boolean myTaskMontada = false;
     private Viewer v;
-    private FireController fc;
     private ControlPanel cp;
     private FirePalette firePalette;
-    private FireController fireController;
-    private Dimension resolution;
     public Color bgColor;
+    private boolean bgLoaded = false;
     GridBagConstraints constraints = new GridBagConstraints();
 
 
@@ -36,12 +41,21 @@ public class MyTask extends JFrame {
 
         if (!myTaskMontada) {
 
+            bg = new Background(500, 500, 2);
+            convolution = new Convolution(bg);
+
             montarMyTask();
             montarViewer();
             montarControlPanel();
 
             this.setVisible(true);
             this.getContentPane().setBackground(Color.PINK);
+            JLabel label = new JLabel(new ImageIcon(bg.getBg()));
+            changeGridPos(constraints, 3, 0);
+            label.setVisible(true);
+            this.add(label, constraints);
+            this.setVisible(false);
+            this.setVisible(true);
             myTaskMontada = true;
 
         } else {
@@ -52,6 +66,7 @@ public class MyTask extends JFrame {
             this.setVisible(true);
         }
     }
+
 
     private void montarMyTask() {
         this.setLayout(new GridBagLayout());
@@ -72,7 +87,7 @@ public class MyTask extends JFrame {
                 new Color(255,0,0,255),
                 new Color(0,0,0,255));
 
-        f = new Fire(500, 500, firePalette);
+        f = new Fire(500, 500, firePalette, convolution);
         v = new Viewer(f);
         changeGridPos(constraints, 0, 0);
         this.add(v, constraints);
@@ -86,18 +101,33 @@ public class MyTask extends JFrame {
         this.add(cp, constraints);
     }
 
-    private void setBgColor(Color color) {
-        this.bgColor = color;
-//        this.getContentPane().setBackground(Color.getColor(String.valueOf(bgColor)));
-        this.setVisible(false);
-        this.setVisible(true);
+    public void addConvolutionImage(){
+
+        int i = 2;
+        if(i < 3){
+            f2 = new Fire(500, 500, firePalette, convolution);
+            cv = new ConvolutionViewer(f2);
+        }
+        changeGridPos(constraints, i, 0);
+        this.add(cv, constraints);
+        System.out.println("a");
+        i++;
     }
 
+    public void afegirBg(){
+        if(!bgLoaded){
+            JLabel label = new JLabel(new ImageIcon(bg.getBg()));
+            changeGridPos(constraints, 3, 0);
+            label.setVisible(true);
+            this.add(label, constraints);
+            this.setVisible(false);
+            this.setVisible(true);
+            bgLoaded = true;
+        }
+    }
     private Color getBgColor() {
         return bgColor;
     }
-
-
 
     //Obra mestra
     private void changeGridDim(GridBagConstraints constraints, int x, int y) {
@@ -114,6 +144,5 @@ public class MyTask extends JFrame {
     public static void main(String[] args) {
 
         new MyTask();
-
     }
 }

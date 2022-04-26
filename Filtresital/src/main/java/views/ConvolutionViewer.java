@@ -4,20 +4,30 @@ import models.Fire;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 
 public class ConvolutionViewer extends Canvas implements Runnable{
 
-    private Fire fuego;
+    private Fire fuego2;
     private boolean isFilterActive;
 
     //Afegir es filtre com a array? Nosesae
     public ConvolutionViewer(Fire fuego){
-        this.fuego = fuego;
+        this.fuego2 = fuego;
         setSize(fuego.getWidth(), fuego.getHeight());
         setVisible(true);
 
-        //FER UNCOMENT EN VOLER QUE FURULI
-//        Thread cv = new Thread(this);
+
+        Thread threadf2 = new Thread(fuego2);
+        Thread threadcv = new Thread(this);
+        threadf2.start();
+        threadcv.start();
+    }
+
+    public Fire getFuego2(){
+        return fuego2;
     }
 
     private double[][][] imageToArray(BufferedImage bufferedImage){
@@ -33,17 +43,22 @@ public class ConvolutionViewer extends Canvas implements Runnable{
                 image[1][i][j] = color.getGreen();
                 image[2][i][j] = color.getBlue();
             }
-
-        }
-        return image;
+        }return image;
     }
 
-//    private double[][] applyConv(int width, int height, double[][][] image, double[][] filter){
-//        Convolution convolution = new Convolution();
-//    }
+    private void filterOp(){
+        float blurFloat = 1f/9f;
+        float [] blurKernel = {
+                blurFloat, blurFloat, blurFloat,
+                blurFloat, blurFloat, blurFloat,
+                blurFloat, blurFloat, blurFloat
+        };
+        BufferedImageOp blur = new ConvolveOp(new Kernel(3, 3, blurKernel));
+    }
+
     public void paint(Graphics g)
     {
-    g.drawImage(fuego, 0, 0, this);
+    g.drawImage(fuego2, 0, 0, this);
     }
 
     @Override

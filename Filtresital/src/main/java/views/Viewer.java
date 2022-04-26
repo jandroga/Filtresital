@@ -19,10 +19,12 @@ import java.awt.*;
 public class Viewer extends Canvas implements Runnable{
 
     private Fire fuego;
+    private Background bg;
     private volatile boolean running;
 
     public Viewer(Fire fuego) {
         this.fuego = fuego;
+
         setSize(fuego.getWidth(), fuego.getHeight());
         setVisible(true);
 
